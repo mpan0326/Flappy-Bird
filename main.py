@@ -15,7 +15,7 @@ title_mg = my_font
 # set up variables for the display
 size = (800, 450)
 screen = pygame.display.set_mode(size)
-bird_x = 300
+bird_x = 370
 bird_y = 200
 
 bg = pygame.image.load("background.png")
