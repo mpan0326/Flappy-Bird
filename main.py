@@ -3,6 +3,7 @@ import random
 #from playsound import playsound
 from bird import Bird
 from cat import Cat
+from fish import Fish
 
 # set up pygame modules
 pygame.init()
@@ -23,16 +24,19 @@ bird_x = 370
 bird_y = 200
 cat_x = 20
 cat_y = 200
+fish_x = 10
+fish_y = 300
+cloud_x = 150
+
 
 
 bg = pygame.image.load("background.png")
-#pipe1 = pygame.image.load()
-#telephone_pole = pygame.image.load()
-
+cloud = pygame.image.load("cloud.png")
 b = Bird(bird_x, bird_y)
 c = Cat(cat_x, cat_y)
 
 st_msg_show = True
+score = 0
 
 
 # render the text for later
@@ -54,12 +58,16 @@ while run:
         if event.type == pygame.QUIT:  # If user clicked close
             run = False
         if event.type == pygame.MOUSEBUTTONUP:
-            start_msg_show = False
+            st_msg_show = False
 
     c.move_cat()
+    cloud_x += 1
 
-    if c.x >= 930:
-        c.x = -150
+    if cloud_x >= 900:
+        cloud_x = -150
+
+    if c.x >= 890:
+        c.x = -140
         c.y = random.randint(125, 325)
 
 
@@ -73,6 +81,7 @@ while run:
     if st_msg_show == False:
         screen.blit(b.image, b.rect)
         screen.blit(c.image, c.rect)
+        screen.blit(cloud, (cloud_x, 100))
     pygame.display.update()
 
     frame += 1
