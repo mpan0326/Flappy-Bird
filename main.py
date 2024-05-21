@@ -13,7 +13,7 @@ title_font = pygame.font.SysFont('Arial', 40)
 pygame.display.set_caption("Flappy Goose")
 title_mg = title_font.render("FLAPPY GOOSE", True, (61, 76, 125))
 howto_st = my_font.render("Click to begin", True, (61, 76, 125))
-howto_move = my_font.render("Press space to move up and down to dodge the cloud", True, (61, 76, 125))
+howto_move = my_font.render("Press space to move up and down to dodge the cloud and flying fish", True, (61, 76, 125))
 score_show = my_font.render("Score: 0", True, (61, 76, 125))
 
 
@@ -37,6 +37,7 @@ f = Fish(fish_x, fish_y)
 
 st_msg_show = True
 score = 0
+add_score = False
 fish_hit = False
 cloud_hit = False
 
@@ -65,9 +66,11 @@ while run:
     c.move_cat()
     f.move_fish()
 
-    if f.x >= 870 or fish_hit == True:
+    if f.x >= 870:
         f.x = -70
         f.y = random.randint(70, 390)
+
+    f.move_fish()
 
     if c.x >= 890:
         c.x = -140
@@ -78,21 +81,31 @@ while run:
     if b.rect.colliderect(f.rect):
         fish_hit = True
 
+    if c.x > 888:
+        add_score = True
+
+
+    if cloud_hit == False and add_score == True:
+        score += 1
+        add_score = False
+        score_show = my_font.render("Score: " + str(score), True, (255, 255, 255))
+
 #make score thing etc jfwhIFw
+
 
 
 
     screen.blit(bg, (0, 0))
     if st_msg_show == True:
         screen.blit(title_mg, (230, 160))
-        screen.blit(howto_move, (155, 210))
+        screen.blit(howto_move, (100, 210))
         screen.blit(howto_st, (320, 240))
 
     if st_msg_show == False:
         screen.blit(b.image, b.rect)
         screen.blit(c.image, c.rect)
         screen.blit(f.image, f.rect)
-        screen.blit(show_score, (0,0))
+        screen.blit(score_show, (0,0))
     pygame.display.update()
 
     frame += 1
