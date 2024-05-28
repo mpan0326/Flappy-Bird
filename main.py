@@ -1,6 +1,9 @@
 import pygame
 import random
-#from playsound import playsound
+
+from playsound import playsound
+
+from playsound import playsound
 from bird import Bird
 from cloud import Cloud
 from fish import Fish
@@ -15,6 +18,9 @@ title_mg = title_font.render("FLAPPY GOOSE", True, (61, 76, 125))
 howto_st = my_font.render("Click to begin", True, (61, 76, 125))
 howto_move = my_font.render("Press space to move up and down to dodge the cloud and flying fish", True, (61, 76, 125))
 score_show = my_font.render("Score: 0", True, (61, 76, 125))
+game_over_hit_fish = title_font.render("Game over you hit the fish.", True, (61, 76, 125))
+game_over_hit_cloud = title_font.render("Game over you hit the cloud.", True, (61, 76, 125))
+final_score = my_font.render("Final Score: 0", True, (61, 76,125))
 
 
 
@@ -24,7 +30,7 @@ screen = pygame.display.set_mode(size)
 bird_x = 370
 bird_y = 200
 fish_x = 10
-fish_y = 300
+fish_y = 40
 cloud_x = 40
 cloud_y = 200
 
@@ -81,7 +87,7 @@ while run:
     if b.rect.colliderect(f.rect):
         fish_hit = True
 
-    if c.x > 888:
+    if c.x > 888 and fish_hit == False and cloud_hit == False:
         add_score = True
 
 
@@ -101,11 +107,24 @@ while run:
         screen.blit(howto_move, (100, 210))
         screen.blit(howto_st, (320, 240))
 
-    if st_msg_show == False:
+    if st_msg_show == False and fish_hit == False and cloud_hit == False:
         screen.blit(b.image, b.rect)
         screen.blit(c.image, c.rect)
         screen.blit(f.image, f.rect)
         screen.blit(score_show, (0,0))
+
+    if fish_hit == True:
+        playsound("gameover.mp3")
+        screen.blit(game_over_hit_fish, (160, 180))
+        final_score = my_font.render("Final Score: " + str(score), True, (61, 76, 125))
+        screen.blit(final_score, (330, 230))
+
+    if cloud_hit == True:
+        playsound("gameover.mp3")
+        screen.blit(game_over_hit_cloud, (160, 180))
+        final_score = my_font.render("Final Score: " + str(score), True, (61, 76, 125))
+        screen.blit(final_score, (330, 230))
+
     pygame.display.update()
 
     frame += 1
