@@ -1,9 +1,5 @@
 import pygame
 import random
-
-from playsound import playsound
-
-from playsound import playsound
 from bird import Bird
 from cloud import Cloud
 from fish import Fish
@@ -46,7 +42,10 @@ score = 0
 add_score = False
 fish_hit = False
 cloud_hit = False
-
+pygame.mixer.init()
+pygame.mixer.music.load("gameover.mp3")
+#pygame.mixer.music.play()
+played = False
 
 # render the text for later
 
@@ -82,9 +81,9 @@ while run:
         c.x = -140
         c.y = random.randint(125, 325)
 
-    if b.rect.colliderect(c.rect):
+    if b.rect.colliderect(c.rect) and st_msg_show == False:
         cloud_hit = True
-    if b.rect.colliderect(f.rect):
+    if b.rect.colliderect(f.rect) and st_msg_show == False:
         fish_hit = True
 
     if c.x > 888 and fish_hit == False and cloud_hit == False:
@@ -95,10 +94,6 @@ while run:
         score += 1
         add_score = False
         score_show = my_font.render("Score: " + str(score), True, (255, 255, 255))
-
-#make score thing etc jfwhIFw
-
-
 
 
     screen.blit(bg, (0, 0))
@@ -114,13 +109,17 @@ while run:
         screen.blit(score_show, (0,0))
 
     if fish_hit == True:
-        playsound("gameover.mp3")
+        if not played:
+            pygame.mixer.music.play()
+        played = True
         screen.blit(game_over_hit_fish, (160, 180))
         final_score = my_font.render("Final Score: " + str(score), True, (61, 76, 125))
         screen.blit(final_score, (330, 230))
 
     if cloud_hit == True:
-        playsound("gameover.mp3")
+        if not played:
+            pygame.mixer.music.play()
+        played = True
         screen.blit(game_over_hit_cloud, (160, 180))
         final_score = my_font.render("Final Score: " + str(score), True, (61, 76, 125))
         screen.blit(final_score, (330, 230))
