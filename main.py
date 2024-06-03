@@ -17,7 +17,7 @@ score_show = my_font.render("Score: 0", True, (61, 76, 125))
 game_over_hit_fish = title_font.render("Game over you hit the fish.", True, (61, 76, 125))
 game_over_hit_cloud = title_font.render("Game over you hit the cloud.", True, (61, 76, 125))
 game_over_hit_both = title_font.render("Game over you hit both enemies.", True, (61,76,125))
-final_score = my_font.render("Final Score: 0", True, (61, 76,125))
+final_score_show = my_font.render("Final Score: 0", True, (61, 76,125))
 
 
 
@@ -69,8 +69,7 @@ while run:
         if event.type == pygame.MOUSEBUTTONUP:
             st_msg_show = False
 
-    c.move_cat()
-    f.move_fish()
+    c.move_cloud()
 
     if f.x >= 870:
         f.x = -70
@@ -84,15 +83,24 @@ while run:
 
     if b.rect.colliderect(c.rect) and st_msg_show == False and both_hit == False:
         cloud_hit = True
+        c.y = 1000000000
+        f.y = 1000000000
     if b.rect.colliderect(f.rect) and st_msg_show == False and both_hit == False:
         fish_hit = True
+        c.y = 100000000000
+        f.y = 100000000000
     if fish_hit == True and cloud_hit == True:
-        both_hit == True
-        fish_hit == False
-        cloud_hit == False
+        both_hit = True
+        fish_hit = False
+        cloud_hit = False
+        f.y = 1000000000
+        c.y = 10000000000
 
 
     if c.x > 888 and fish_hit == False and cloud_hit == False and both_hit == False:
+        add_score = True
+
+    if f.x > 868 and fish_hit == False and cloud_hit == False and both_hit == False:
         add_score = True
 
 
@@ -119,25 +127,25 @@ while run:
             pygame.mixer.music.play()
         played = True
         screen.blit(game_over_hit_fish, (160, 180))
-        final_score = my_font.render("Final Score: " + str(score), True, (61, 76, 125))
-        screen.blit(final_score, (330, 230))
+        final_score_show = my_font.render("Final Score: " + str(score), True, (61, 76, 125))
+        screen.blit(final_score_show, (330, 230))
 
     if cloud_hit == True:
         if not played:
             pygame.mixer.music.play()
         played = True
         screen.blit(game_over_hit_cloud, (160, 180))
-        final_score = my_font.render("Final Score: " + str(score), True, (61, 76, 125))
-        screen.blit(final_score, (330, 230))
+        final_score_show = my_font.render("Final Score: " + str(score), True, (61, 76, 125))
+        screen.blit(final_score_show, (330, 230))
 
 
     if both_hit == True:
         if not played:
             pygame.mixer.music.play()
         played = True
-        screen.blit(game_over_hit_both, (160, 180))
-        final_score = my_font.render("Final Score: " + str(score), True, (61, 76, 125))
-        screen.blit(final_score, (330, 230))
+        screen.blit(game_over_hit_both, (120, 180))
+        final_score_show = my_font.render("Final Score: " + str(score), True, (61, 76, 125))
+        screen.blit(final_score_show, (330, 230))
     pygame.display.update()
 
     frame += 1
