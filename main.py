@@ -71,13 +71,13 @@ while run:
 
     c.move_cloud()
 
-    if f.x >= 870:
+    if f.x >= 870 and cloud_hit == False and fish_hit == False:
         f.x = -70
         f.y = random.randint(70, 390)
 
     f.move_fish()
 
-    if c.x >= 890:
+    if c.x >= 890 and cloud_hit == False and fish_hit == False:
         c.x = -140
         c.y = random.randint(125, 325)
 
