@@ -77,11 +77,11 @@ while run:
 
     f.move_fish()
 
-    if c.x >= 890 and cloud_hit == False and fish_hit == False:
+    if c.x >= 890 and cloud_hit == False and fish_hit == False and both_hit == False:
         c.x = -140
         c.y = random.randint(125, 325)
 
-    if b.rect.colliderect(c.rect) and st_msg_show == False and both_hit == False:
+    if b.rect.colliderect(c.rect) and st_msg_show == False and both_hit == False and both_hit == False:
         cloud_hit = True
         c.y = 1000000000
         f.y = 1000000000
@@ -97,10 +97,10 @@ while run:
         c.y = 10000000000
 
 
-    if c.x > 888 and fish_hit == False and cloud_hit == False and both_hit == False:
+    if c.x > 888 and fish_hit == False and cloud_hit == False and both_hit == False and st_msg_show == False :
         add_score = True
 
-    if f.x > 868 and fish_hit == False and cloud_hit == False and both_hit == False:
+    if f.x > 868 and fish_hit == False and cloud_hit == False and both_hit == False and st_msg_show == False:
         add_score = True
 
 
@@ -137,7 +137,6 @@ while run:
         screen.blit(game_over_hit_cloud, (160, 180))
         final_score_show = my_font.render("Final Score: " + str(score), True, (61, 76, 125))
         screen.blit(final_score_show, (330, 230))
-
 
     if both_hit == True:
         if not played:
